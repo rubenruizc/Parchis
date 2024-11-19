@@ -71,6 +71,7 @@ def test_avanzaPosiciones_dos_jugadores():
     parchis.avanzaPosiciones(2)
     assert parchis.fichaj2 == posicionEsperada_J2
 
+
 def test_avanzaPosiciones_otroTamañoTablero():
     parchis = Parchis("Amaro", "Ruben")
     Parchis.TAM_TABLERO = 20
