@@ -43,32 +43,55 @@ class Parchis:
                         if j == self.fichaJ1:
                             tableroPintado += "O"
                     elif i == 3:
-                        if j == self.fichaJ2:
+                        if j == self.fichaj2:
                             tableroPintado += "O"
                     
                 tableroPintado += "\tF\n"
             return tableroPintado
     
-    #Un método no puede ser estatico si voy a modificar un atributo dentro
-    def avanzaPosiciones(self,ficha,jugador):
-            sumaDados = (Parchis.dado1 + Parchis.dado2)
+    def avanzaPosiciones(self, jugador):
+        sumaDados = Parchis.dado1 + Parchis.dado2
+
+        # Determinar cuál ficha mover
+        if jugador == 1:
+            ficha = self.fichaJ1
+        elif jugador == 2:
+            ficha = self.fichaj2
+
+        # Calcular la posición final con rebote
+        if ficha + sumaDados > Parchis.TAM_TABLERO:
+            posicion = abs((Parchis.TAM_TABLERO * 2) - (ficha + sumaDados))
+        else:
+            posicion = ficha + sumaDados
+
+        # Asignar la nueva posición
+        if jugador == 1:
+            self.fichaJ1 = posicion
+        elif jugador == 2:
+            self.fichaj2 = posicion
+
+
+    def estadoCarrera(self):
+         mensaje = ""
+         if(self.fichaJ1 > self.fichaj2):
+              mensaje = "El jugador 1: " + self.nombreJ1 + " va ganando"
         
-        # Por defecto, le damos el valor de sumaDados
-            posicion = sumaDados
+         elif(self.fichaJ1 < self.fichaj2):
+              mensaje = "El jugador 2: " + self.nombreJ2 + " va ganando"
 
-        # Si la suma de la posición actual más la suma de los dados es mayor que el tablero, usamos la fórmula para el rebote
-            if (ficha + sumaDados > Parchis.TAM_TABLERO):
-            # Caso práctico
-            # TAM -> 10
-            # Jugador en 6
-            # Suma dados -> 8
-            # 20 - 14 (6+8) = 6, esta es la posición final
-            # Usamos absoluto para los negativos
-                posicion = abs((Parchis.TAM_TABLERO * 2) - (ficha + sumaDados))
+         else:
+              mensaje = "Los jugadores 1: " + self.nombreJ1 + " y jugador 2: " + self.nombreJ2 + " van empate"
 
-            if(jugador == 1):
-                 self.fichaJ1 = posicion
-            elif(jugador == 2):
-                 self.fichaj2 = posicion
+         return mensaje;    
 
+
+    def esGanador(self):
+         mensajeGanador = ""
+
+         if(self.fichaJ1 == Parchis.TAM_TABLERO):
+              mensajeGanador = self.nombreJ1 +" ES EL GANADOR"
+         elif(self.fichaj2 == Parchis.TAM_TABLERO):
+              mensajeGanador = self.nombreJ2 +  " ES EL GANADOR"
+
+         return mensajeGanador
 
