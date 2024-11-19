@@ -24,17 +24,51 @@ class Parchis:
 
     
     def pintaTablero(self):
-        tableroPintado = ""
-        
-        for i in range (Parchis.TAM_TABLERO + 1):
-            if(i == 0):
-                tableroPintado +="I\t"
-                
-            elif(i== Parchis.TAM_TABLERO):
-                tableroPintado+= "F\n"
-            else:
-                tableroPintado += str(i) + "\t"
+            tableroPintado = ""
 
-        return tableroPintado
+            for i in range(1, 4):
+                if i == 2:
+                    tableroPintado += self.nombreJ1
+                elif i == 3:
+                    tableroPintado += self.nombreJ2
+                
+                tableroPintado += "\tI"
+
+                for j in range(1, Parchis.TAM_TABLERO):
+                    tableroPintado += "\t"
+
+                    if i == 1:
+                        tableroPintado += str(j)
+                    elif i == 2:
+                        if j == self.fichaJ1:
+                            tableroPintado += "O"
+                    elif i == 3:
+                        if j == self.fichaJ2:
+                            tableroPintado += "O"
+                    
+                tableroPintado += "\tF\n"
+            return tableroPintado
     
+    #Un método no puede ser estatico si voy a modificar un atributo dentro
+    def avanzaPosiciones(self,ficha,jugador):
+            sumaDados = (Parchis.dado1 + Parchis.dado2)
+        
+        # Por defecto, le damos el valor de sumaDados
+            posicion = sumaDados
+
+        # Si la suma de la posición actual más la suma de los dados es mayor que el tablero, usamos la fórmula para el rebote
+            if (ficha + sumaDados > Parchis.TAM_TABLERO):
+            # Caso práctico
+            # TAM -> 10
+            # Jugador en 6
+            # Suma dados -> 8
+            # 20 - 14 (6+8) = 6, esta es la posición final
+            # Usamos absoluto para los negativos
+                posicion = abs((Parchis.TAM_TABLERO * 2) - (ficha + sumaDados))
+
+            if(jugador == 1):
+                 self.fichaJ1 = posicion
+            elif(jugador == 2):
+                 self.fichaj2 = posicion
+
 
