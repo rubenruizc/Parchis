@@ -70,3 +70,15 @@ def test_avanzaPosiciones_dos_jugadores():
     posicionEsperada_J2 = 10
     parchis.avanzaPosiciones(2)
     assert parchis.fichaj2 == posicionEsperada_J2
+
+def test_avanzaPosiciones_otroTamañoTablero():
+    parchis = Parchis("Amaro", "Ruben")
+    Parchis.TAM_TABLERO = 20
+    Parchis.dado1 = 6
+    Parchis.dado2 = 6
+    parchis.fichaJ1 = 17
+
+    # La ficha debe rebotar: 17 + (6 + 6 = 12) -> 17 + 12 = 29. Rebote: |20 - 29| = 11
+    posicionEsperada = 11
+    parchis.avanzaPosiciones(1)
+    assert parchis.fichaJ1 == posicionEsperada
